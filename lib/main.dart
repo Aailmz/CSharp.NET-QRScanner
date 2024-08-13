@@ -120,11 +120,11 @@ class _QRViewExampleState extends State<QRViewExample> {
       final String jsonData = jsonEncode(dataToSend);
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.179:8000/'),
+        Uri.parse('http://192.168.1.150:8000/'),
         headers: {'Content-Type': 'application/json'},
         body: jsonData,
       );
-
+      
       if (response.statusCode == 200) {
         print('Data sent successfully');
       } else {
