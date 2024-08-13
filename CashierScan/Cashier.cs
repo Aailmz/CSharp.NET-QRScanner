@@ -26,7 +26,7 @@ namespace CashierScan
             gridScan.Columns.Add("Name", "Name");
             gridScan.Columns.Add("Code", "Code");
 
-            gridScan.Columns.Add("Timestamp", "Timestamp"); // Contoh kolom baru
+            gridScan.Columns.Add("Timestamp", "Timestamp");
         }
 
         private void LoadData()
@@ -79,9 +79,9 @@ namespace CashierScan
             try
             {
                 listener = new HttpListener();
-                listener.Prefixes.Add("http://192.168.1.150:8000/");
+                listener.Prefixes.Add("http://192.168.1.150:8000/"); //Change to your Wi-Fi IP Address
                 listener.Start();
-                Console.WriteLine("Server started, listening on http://192.168.1.150:8000/");
+                Console.WriteLine("Server started");
                 listenerThread = new Thread(Listen);
                 listenerThread.Start();
             }
@@ -101,7 +101,6 @@ namespace CashierScan
                     var request = context.Request;
                     var response = context.Response;
 
-                    // Add CORS headers
                     response.Headers.Add("Access-Control-Allow-Origin", "*");
                     response.Headers.Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
                     response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
@@ -121,12 +120,11 @@ namespace CashierScan
                             var json = reader.ReadToEnd();
                             var item = JsonConvert.DeserializeObject<ScannedItem>(json);
 
-                            // Tambahkan timestamp
                             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                             Invoke(new Action(() =>
                             {
-                                gridScan.Rows.Add(item.Name, item.Code, timestamp); // Tambahkan timestamp
+                                gridScan.Rows.Add(item.Name, item.Code, timestamp);
                             }));
                         }
                     }
@@ -158,8 +156,6 @@ namespace CashierScan
                 listenerThread.Abort();
             }
         }
-
-        // Implementasi event handler untuk tombol-tombol lainnya...
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try
@@ -182,7 +178,6 @@ namespace CashierScan
                             MessageBox.Show("Data successfully inserted!");
                             LoadData();
 
-                            // Generate QR Code after successful data insertion
                             GenerateQRCode(name, code);
                         }
                         else
