@@ -12,5 +12,5 @@ Just start the project and the server will automatically run!
 You can change the server host and port
 I already give an example with: ("http://192.168.1.150:8000/");
 
-I only make this in one page, so..
+I will still update this repository and...
 Feel free to use!
